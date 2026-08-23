@@ -1,6 +1,7 @@
 :root { font-family: Arial, Helvetica, sans-serif; color: #1d1d1b; background: #f4f2ed; font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+html, body { scroll-behavior: smooth; scroll-padding-top: 100px; }
+section[id], [id] { scroll-margin-top: 100px; }
 body { margin: 0; }
 button, a { font: inherit; }
