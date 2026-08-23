@@ -1,0 +1,20 @@
+{
+  "name": "ebogdan | Independent digital studio",
+  "short_name": "ebogdan",
+  "description": "Independent digital studio for web development, design, photography and digital optimization.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#161817",
+  "theme_color": "#0c8f89",
+  "lang": "de",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/site-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

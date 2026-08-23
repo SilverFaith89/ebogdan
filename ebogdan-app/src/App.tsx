@@ -1,22 +1,56 @@
-import { Button, Typography, Space } from "antd";
+import { ArrowUpOutlined, CloseOutlined, InstagramOutlined, LinkedinOutlined, MenuOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import "./App.css";
+import { translate } from "./i18n";
+import type { Language } from "./i18n";
 
-const { Title, Paragraph } = Typography;
+const services = [
+  ["01", "Web development", "High-performance websites and applications engineered around how your business really works.", "React · Architecture · Performance · SEO"],
+  ["02", "Web design", "Elegant, conversion-focused digital experiences that make the right impression and feel effortless to use.", "UX/UI · Identity · Systems · Conversion"],
+  ["03", "Photography", "A considered visual language for your people, products and the moments that make your brand credible.", "Business · Product · Portraits · Social"],
+  ["04", "Social media", "Consistent, strategic content that builds visibility and gives your audience a reason to stay close.", "Strategy · Content · Direction · Publishing"],
+  ["05", "Workflow optimization", "A clear-eyed look at the friction in your business, with practical changes that return time and focus.", "Audit · Systems · Productivity · Clarity"],
+  ["06", "Automation & digitalization", "Connected tools and streamlined processes that let meaningful work take the foreground.", "Integration · Automation · Documentation · Scale"],
+];
+
+const projects = [
+  { title: "North / Objects", category: "Product & digital direction", image: "https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&w=1400&q=85", className: "project-large", description: "A tactile digital home for an independent furniture studio." },
+  { title: "Field Notes", category: "Brand photography", image: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1000&q=85", className: "project-small", description: "A portrait of the people behind a better way of working." },
+  { title: "Aster House", category: "Web design & development", image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85", className: "project-medium", description: "A calm, editorial platform for a place with a point of view." },
+];
+
+const principles = [
+  ["01", "Built around your business", "Every solution starts with understanding the actual problem, not selecting a fashionable tool."],
+  ["02", "Designed with intention", "Every visual decision serves the brand, the user or the outcome you need to create."],
+  ["03", "Technology without theatre", "Modern technology earns its place by creating real value, not by making the work sound impressive."],
+  ["04", "One partner, fewer handovers", "Strategy, design, development and optimization stay aligned from first conversation to launch."],
+];
+
+const process = [["01", "Discover", "Understand the business, goals, audience and current challenges."], ["02", "Define", "Develop the strategy, structure and creative direction."], ["03", "Create", "Design, develop and implement the solution."], ["04", "Optimize", "Measure, improve and continuously refine the result."]];
 
 function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [language, setLanguage] = useState<Language>(() => (localStorage.getItem("ebogdan-language") as Language) || "de");
+  const t = (value: string) => translate(language, value);
+  const changeLanguage = (nextLanguage: Language) => { setLanguage(nextLanguage); localStorage.setItem("ebogdan-language", nextLanguage); };
   return (
-      <div style={{ padding: 40 }}>
-        <Space direction="vertical">
-          <Title>React + Vite + Ant Design</Title>
-
-          <Paragraph>
-            Your project is ready.
-          </Paragraph>
-
-          <Button type="primary">
-            Hello Ant Design
-          </Button>
-        </Space>
-      </div>
+    <div className="site-shell">
+      <header className="nav-wrap"><nav className="nav" aria-label="Main navigation"><a className="wordmark" href="#top" onClick={() => setMenuOpen(false)}><img className="brand-logo" src="/site-icon.svg" width="30" height="30" alt="ebogdan" /></a><button className="menu-toggle" aria-label={menuOpen ? "Close menu" : "Open menu"} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <CloseOutlined /> : <MenuOutlined />}</button><div className={`nav-links ${menuOpen ? "is-open" : ""}`}><a href="#services" onClick={() => setMenuOpen(false)}>{t("Services")}</a><a href="#work" onClick={() => setMenuOpen(false)}>{t("Work")}</a><a href="#about" onClick={() => setMenuOpen(false)}>{t("About")}</a><a className="nav-cta" href="mailto:hello@ebogdan.com" onClick={() => setMenuOpen(false)}>{t("Let's work together")} <ArrowUpOutlined /></a><div className="language-switcher" aria-label="Language"><button className={language === "de" ? "active" : ""} onClick={() => changeLanguage("de")}>DE</button><button className={language === "en" ? "active" : ""} onClick={() => changeLanguage("en")}>EN</button><button className={language === "ro" ? "active" : ""} onClick={() => changeLanguage("ro")}>RO</button></div></div></nav></header>
+      <main id="top">
+        <section className="hero"><div className="hero-copy reveal"><p className="eyebrow">{t("Independent digital studio · 2026")}</p><h1>{language === "de" ? <>Digitale Erlebnisse, die Unternehmen <em>voranbringen.</em></> : language === "ro" ? <>Experiențe digitale care duc afacerile <em>mai departe.</em></> : <>Digital experiences designed to <em>move</em> businesses forward.</>}</h1><p className="hero-intro">{t("Web development, design, photography, social media and workflow optimization — thoughtfully combined to create stronger brands, better experiences and more efficient businesses.")}</p><a className="button button-light" href="mailto:hello@ebogdan.com">{t("Start a conversation")} <ArrowUpOutlined /></a></div><div className="hero-art"><div className="hero-image" role="img" aria-label="Minimal architectural interior with warm light" /><div className="hero-caption"><span>{t("Selected frame / 01")}</span><span>{t("Creative technology, considered")}</span></div></div><a className="scroll-cue" href="#intro">{t("Scroll to explore")} <span>↓</span></a></section>
+        <section className="intro section" id="intro"><p className="eyebrow">{t("The studio")}</p><div className="intro-grid"><h2>{t("One partner.")}<br /><em>{t("Multiple disciplines.")}</em></h2><div><p className="lead">{t("You shouldn't have to coordinate five different people to make your digital presence feel like one coherent thing.")}</p><p>{t("ebogdan brings strategy, design, technology, content and optimization into one thoughtful service. The result is work that looks distinct, works hard and stays useful long after launch.")}</p></div></div><div className="discipline-line"><span>{t("Strategy")}</span><i>+</i><span>{t("Design")}</span><i>+</i><span>{t("Technology")}</span><i>+</i><span>{t("Content")}</span><i>+</i><span>{t("Optimization")}</span></div></section>
+        <section className="team section" id="team"><div className="section-top"><p className="eyebrow">The people / 01</p><h2>A small team.<br /><em>Serious about the details.</em></h2></div><div className="team-grid"><article className="member"><div className="member-image"><img src="/assets/Bogdan_Tudor_Cristian_min.jpg" width="900" height="1100" alt="Bogdan T. Cristian" onError={(event) => { event.currentTarget.src = "/site-icon.svg"; }} /></div><div className="member-meta"><div><h3>Bogdan T. Cristian</h3><p>Lead senior developer<br />Owner</p></div><span>Technology<br />Direction</span></div></article><article className="member member-alexandra"><div className="member-image member-initials" role="img" aria-label="Bogdan M. Alexandra"><span>AM</span></div><div className="member-meta"><div><h3>Bogdan M. Alexandra</h3><p>Senior graphic designer</p></div><span>Identity<br />Visual direction</span></div></article></div></section>
+        <section className="services section" id="services"><div className="section-top"><p className="eyebrow">{t("Capabilities / 01")}</p><h2>{t("What we do")}</h2><p className="section-note">{t("A focused set of disciplines, connected by one clear point of view.")}</p></div><div className="service-list">{services.map(([number, title, description, tags]) => <article className="service-row" key={number}><span className="service-number">{number}</span><h3>{t(title)}</h3><p>{t(description)}</p><span className="service-tags">{t(tags)}</span><ArrowUpOutlined className="row-arrow" /></article>)}</div></section>
+        <section className="work section" id="work"><div className="section-top"><p className="eyebrow">{t("Selected work / 02")}</p><h2>{t("Quietly memorable.")}</h2><a className="text-link" href="mailto:hello@ebogdan.com">{t("View selected projects")} <ArrowUpOutlined /></a></div><div className="project-grid">{projects.map((project) => <a className={`project ${project.className}`} href="mailto:hello@ebogdan.com" key={project.title}><div className="project-image" style={{ backgroundImage: `url(${project.image})` }} /><div className="project-meta"><div><h3>{project.title}</h3><p>{t(project.description)}</p></div><span>{t(project.category)}</span></div></a>)}</div></section>
+        <section className="principles section" id="about"><div className="section-top"><p className="eyebrow">{t("The difference / 03")}</p><h2>{t("Different disciplines.")}<br /><em>{t("One clear vision.")}</em></h2></div><div className="principle-list">{principles.map(([number, title, text]) => <article key={number}><span>{number}</span><div><h3>{t(title)}</h3><p>{t(text)}</p></div></article>)}</div></section>
+        <section className="process section"><div className="section-top"><p className="eyebrow">{t("How it works / 04")}</p><h2>{t("From first thought")}<br /><em>{t("to finished work.")}</em></h2></div><div className="process-grid">{process.map(([number, title, text]) => <article key={number}><span>{number}</span><h3>{t(title)}</h3><p>{t(text)}</p></article>)}</div></section>
+        <section className="testimonial section"><p className="eyebrow">{t("A note from the studio")}</p><blockquote>“{t("Good digital work should feel inevitable in hindsight: clear, considered and completely itself.")}”</blockquote><p className="signature">— ebogdan, {t("Independent digital studio")}</p></section>
+        <section className="closing section"><p className="eyebrow">{t("Have a project in mind?")}</p><h2>{t("Let's make something")}<br /><em>{t("worth remembering.")}</em></h2><a className="button button-dark" href="mailto:hello@ebogdan.com">{t("Start a conversation")} <ArrowUpOutlined /></a></section>
+        <section className="contact section" id="contact"><div><p className="eyebrow">{t("Contact / 05")}</p><h2>{t("Let's talk.")}</h2></div><div className="contact-detail"><a className="email" href="mailto:hello@ebogdan.com">hello@ebogdan.com <ArrowUpOutlined /></a><p>{t("Independent digital studio")}<br />{t("Working across Europe and beyond")}</p><div className="socials"><a href="https://www.linkedin.com" aria-label="LinkedIn"><LinkedinOutlined /></a><a href="https://www.instagram.com" aria-label="Instagram"><InstagramOutlined /></a></div></div></section>
+      </main>
+      <footer className="footer"><a className="wordmark" href="#top"><img className="brand-logo" src="/site-icon.svg" width="30" height="30" alt="ebogdan" /></a><p>{t("Digital experiences with")}<br />{t("a human point of view.")}</p><div className="footer-links"><a href="#services">{t("Services")}</a><a href="#work">{t("Work")}</a><a href="#about">{t("About")}</a><a href="#contact">{t("Contact")}</a></div><div className="legal"><span>© 2026 ebogdan</span><a href="#contact">{t("Privacy")}</a><a href="#contact">{t("Impressum")}</a></div></footer>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "ProfessionalService", name: "ebogdan", description: "Independent digital studio for web development, design, photography and digital optimization.", url: window.location.origin, email: "hello@ebogdan.com", areaServed: "Europe", serviceType: services.map((service) => service[1]) }) }} />
+    </div>
   );
 }
 
