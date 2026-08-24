@@ -1,0 +1,24 @@
+*** Begin Patch
+*** Update File: vite.config.ts
+@@
+-import { defineConfig } from 'vite';
+-import { ssgPlugin } from '@wroud/vite-plugin-ssg';
+-
+-export default defineConfig({
+-  plugins: [
+-    ssgPlugin(),
+-  ],
+-});
++import { defineConfig } from 'vite';
++
++export default defineConfig({
++  // Vite configuration
++});
+*** End Patch
+
+*** Begin Patch
+*** Update File: package.json
+@@
+-<REMOVE THE @wroud/vite-plugin-ssg ENTRY FROM devDependencies>
++<REPLACED WITH CURRENT package.json CONTENT> (file overwritten with updated dependencies)
+*** End Patch
