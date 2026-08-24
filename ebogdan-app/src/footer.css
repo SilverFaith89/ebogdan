@@ -1,0 +1,95 @@
+/* Footer layout: center brand block and sitemap list */
+.footer {
+  padding: 48px 8vw;
+  background: var(--panel);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+}
+
+.footer-brand-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.footer-brand-block .brand-logo {
+  width: 72px !important; /* 50% larger than 48px */
+  height: 72px !important;
+  border-radius: 12px;
+}
+
+.footer-brand-block .slogan {
+  margin: 0;
+  color: rgba(255,255,255,0.92);
+  font-size: 14px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.footer-sitemap {
+  display: block;
+}
+
+.footer-sitemap .sitemap-title {
+  margin: 0 0 6px 0;
+  font-weight: 700;
+  font-size: 13px;
+  color: rgba(255,255,255,0.95);
+}
+
+.footer-sitemap nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.footer-sitemap nav a {
+  color: rgba(255,255,255,0.92);
+  text-decoration: none;
+  font-size: 13px;
+  opacity: 0.95;
+}
+
+.footer-sitemap nav a:hover {
+  text-decoration: underline;
+}
+
+.legal {
+  color: rgba(255,255,255,0.7);
+  font-size: 12px;
+}
+
+@media (min-width: 880px) {
+  .footer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+
+  .footer-brand-block {
+    flex: 1 1 33%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer-sitemap {
+    flex: 1 1 33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer-sitemap nav {
+    align-items: flex-start;
+  }
+
+  .legal { flex: 1 1 33%; display: flex; justify-content: flex-end; align-items: center; }
+}
