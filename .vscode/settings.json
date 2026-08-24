@@ -1,0 +1,9 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "&": true,
+        "/^& \"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\python\\.exe\" -c \"from PIL import Image; from pathlib import Path; base = Path\\(r'C:\\\\Users\\\\Lenovo\\\\ebogdan-git\\\\ebogdan-app\\\\public\\\\assets\\\\examples'\\);\nfor p in sorted\\(base\\.iterdir\\(\\)\\):\n    if p\\.suffix\\.lower\\(\\) in \\{'\\.png','\\.jpg','\\.jpeg','\\.webp'\\}:\n        try:\n            with Image\\.open\\(p\\) as img:\n                print\\(f'\\{p\\.name\\}: \\{img\\.size\\} mode=\\{img\\.mode\\}'\\)\n        except Exception as e:\n            print\\(f'\\{p\\.name\\}: ERROR \\{e\\}'\\)\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

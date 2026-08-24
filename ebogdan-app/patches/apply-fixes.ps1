@@ -1,3 +1,20 @@
+# Apply-fixes: overwrite vite.config.ts and package.json with the fixed versions
+# Run this from the project root or double-click in File Explorer to apply.
+
+$projectRoot = "C:\Users\Lenovo\ebogdan-git\ebogdan-app"
+
+# Overwrite vite.config.ts
+$viteContent = @'
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  // Vite configuration
+});
+'@
+Set-Content -Path (Join-Path $projectRoot 'vite.config.ts') -Value $viteContent -Encoding UTF8
+
+# Overwrite package.json
+$packageJson = @'
 {
   "name": "ebogdan-app",
   "private": true,
@@ -40,3 +57,9 @@
     "vite": "^8.1.1"
   }
 }
+'@
+Set-Content -Path (Join-Path $projectRoot 'package.json') -Value $packageJson -Encoding UTF8
+
+Write-Output "Files updated: vite.config.ts, package.json"
+Write-Output "If you had @wroud/vite-plugin-ssg installed, run: npm uninstall @wroud/vite-plugin-ssg"
+Write-Output "Then run: npm install && npm run build && node scripts/generate-static.js"

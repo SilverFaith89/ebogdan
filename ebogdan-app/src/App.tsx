@@ -2,6 +2,7 @@ import { ArrowUpOutlined, CloseOutlined, InstagramOutlined, MailOutlined, MenuOu
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import "./footer.css";
 import { translate } from "./i18n";
 import type { Language } from "./i18n";
 import { ImpressumPage } from "./pages/ImpressumPage";
@@ -38,6 +39,7 @@ function SitePage() {
   const [language, setLanguage] = useState<Language>(() => (localStorage.getItem("ebogdan-language") as Language) || "de");
   const t = (value: string) => translate(language, value);
   const changeLanguage = (nextLanguage: Language) => { setLanguage(nextLanguage); localStorage.setItem("ebogdan-language", nextLanguage); };
+  const year = new Date().getFullYear();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 12);
@@ -68,7 +70,7 @@ function SitePage() {
     <div className="site-shell">
       <header className={`nav-wrap ${isScrolled ? "scrolled" : ""}`}><nav className="nav" aria-label="Main navigation"><a className="wordmark" href="#top" onClick={() => setMenuOpen(false)}><img className="brand-logo" src="/assets/android-chrome-256x256.png" width="48" height="48" alt="ebogdan" /></a><button className="menu-toggle" aria-label={menuOpen ? "Close menu" : "Open menu"} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <CloseOutlined /> : <MenuOutlined />}</button><div className={`nav-links ${menuOpen ? "is-open" : ""}`}><a href="/#services" onClick={() => setMenuOpen(false)}>{t("Services")}</a><a href="/#work" onClick={() => setMenuOpen(false)}>{t("Work")}</a><a href="/#about" onClick={() => setMenuOpen(false)}>{t("About")}</a><a className="nav-cta" href="mailto:ebogdan.online@gmail.com" onClick={() => setMenuOpen(false)}>{language === "de" ? "Idee besprechen" : language === "ro" ? "Discută ideea" : "Idea to discuss"} <MailOutlined /></a><a className="nav-phone" href="tel:+491626220749" onClick={() => setMenuOpen(false)}>(+49) 162 622 0749 <PhoneOutlined /></a><div className="language-switcher" aria-label="Language"><button className={language === "de" ? "active" : ""} onClick={() => changeLanguage("de")}>DE</button><button className={language === "en" ? "active" : ""} onClick={() => changeLanguage("en")}>EN</button><button className={language === "ro" ? "active" : ""} onClick={() => changeLanguage("ro")}>RO</button></div></div></nav></header>
       <main id="top">
-        <section className="hero"><div className="hero-copy reveal"><p className="eyebrow">{language === "de" ? "Webdesign und Entwicklung · 2026" : language === "ro" ? "Design și dezvoltare website · 2026" : "Website Design and Development · 2026"}</p><p className="brand-tagline">{t("We create your Online Image")}</p><h1>{language === "de" ? <>Digitale Erlebnisse, die Unternehmen <em>voranbringen.</em></> : language === "ro" ? <>Experiențe digitale care duc afacerile <em>mai departe.</em></> : <>Digital experiences designed to <em>move</em> businesses forward.</>}</h1><p className="sub-label">{t("Kostenlose Beratung")}</p><p className="hero-intro">{t("We meet you personally and offer you a free consultation based on your own ideas and wishes.")}</p><div className="hero-actions"><a className="button button-light" href="mailto:ebogdan.online@gmail.com">{t("Start a conversation")} <ArrowUpOutlined /></a></div></div><div className="hero-art"><button type="button" className="hero-image image-button" aria-label="Open hero image" onClick={() => setSelectedImage("/assets/examples/4.jpg")} style={{ backgroundImage: "url('/assets/examples/4.jpg')" }} /></div></section>
+        <section className="hero"><div className="hero-copy reveal"><p className="eyebrow">{language === "de" ? `Webdesign und Entwicklung · ${year}` : language === "ro" ? `Design și dezvoltare website · ${year}` : `Website Design and Development · ${year}`}</p><p className="brand-tagline">{t("We create your Online Image")}</p><h1>{language === "de" ? <>Digitale Erlebnisse, die Unternehmen <em>voranbringen.</em></> : language === "ro" ? <>Experiențe digitale care duc afacerile <em>mai departe.</em></> : <>Digital experiences designed to <em>move</em> businesses forward.</>}</h1><p className="sub-label">{t("Kostenlose Beratung")}</p><p className="hero-intro">{t("We meet you personally and offer you a free consultation based on your own ideas and wishes.")}</p><div className="hero-actions"><a className="button button-light" href="mailto:ebogdan.online@gmail.com">{t("Start a conversation")} <ArrowUpOutlined /></a></div></div><div className="hero-art"><button type="button" className="hero-image image-button" aria-label="Open hero image" onClick={() => setSelectedImage("/assets/examples/4.jpg")} style={{ backgroundImage: "url('/assets/examples/4.jpg')" }} /></div></section>
         <section className="intro section" id="intro"><p className="eyebrow">{t("The studio")}</p><div className="intro-grid"><h2>{t("One partner.")}<br /><em>{t("Multiple disciplines.")}</em></h2><div><p className="lead">{t("You shouldn't have to coordinate five different people to make your digital presence feel like one coherent thing.")}</p><p>{t("ebogdan brings strategy, design, technology, content and optimization into one thoughtful service. The result is work that looks distinct, works hard and stays useful long after launch.")}</p></div></div><div className="discipline-line"><span>{t("Strategy")}</span><i>+</i><span>{t("Design")}</span><i>+</i><span>{t("Technology")}</span><i>+</i><span>{t("Content")}</span><i>+</i><span>{t("Optimization")}</span></div></section>
         <section className="team section" id="team"><div className="section-top"><p className="eyebrow">{t("The people / 01")}</p><h2>{t("A small team.")}<br /><em>{t("Serious about the details.")}</em></h2></div><div className="team-grid"><article className="member"><div className="member-image"><img src="/assets/Bogdan_Tudor_Cristian_min.jpg" width="900" height="1100" alt="Bogdan T. Cristian" onClick={() => setSelectedImage("/assets/Bogdan_Tudor_Cristian_min.jpg")} onError={(event) => { event.currentTarget.src = "/site-icon.svg"; }} /></div><div className="member-meta"><div><h3>Bogdan T. Cristian</h3><p>{t("Lead senior developer")}<br />{t("Owner")}</p></div><span>{t("Technology")}<br />{t("Direction")}</span></div></article>        <article className="member member-alexandra"><div className="member-image"><img src="/assets/Alexandra_Bogdan_min.png" width="900" height="1100" alt="Bogdan M. Alexandra" onClick={() => setSelectedImage("/assets/Alexandra_Bogdan_min.png")} onError={(event) => { event.currentTarget.src = "/site-icon.svg"; }} /></div><div className="member-meta"><div><h3>Bogdan M. Alexandra</h3><p>{t("Senior graphic designer")}</p></div><span>{t("Identity")}<br />{t("Visual direction")}</span></div></article></div></section>
         <section className="services section" id="services"><div className="section-top"><p className="eyebrow">{t("Capabilities / 01")}</p><h2>{t("What we do")}</h2><p className="section-note">{t("A focused set of disciplines, connected by one clear point of view.")}</p></div><div className="service-list">{services.map(([number, title, description, tags]) => <article className="service-row" key={number}><span className="service-number">{number}</span><h3>{t(title)}</h3><p>{t(description)}</p><span className="service-tags">{t(tags)}</span><ArrowUpOutlined className="row-arrow" /></article>)}</div></section>
@@ -85,7 +87,25 @@ function SitePage() {
           <img src={selectedImage} alt="Expanded project preview" className="lightbox-image" onClick={(event) => event.stopPropagation()} />
         </div>
       )}
-      <footer className="footer"><a className="wordmark" href="#top"><img className="brand-logo" src="/assets/android-chrome-256x256.png" width="30" height="30" alt="ebogdan" /></a><p>{t("Digital experiences with")}<br />{t("a human point of view.")}</p><div className="footer-links"><a href="/#services">{t("Services")}</a><a href="/#work">{t("Work")}</a><a href="/#about">{t("About")}</a><a href="/#contact">{t("Contact")}</a></div><div className="legal"><span>© 2026 ebogdan</span><a href="/privacy">{t("Privacy")}</a><a href="/impressum">{t("Impressum")}</a></div></footer>
+      <footer className="footer">
+        <div className="footer-brand-block">
+          <a className="wordmark" href="#top"><img className="brand-logo" src="/assets/android-chrome-256x256.png" width="30" height="30" alt="ebogdan" /></a>
+          <p className="slogan">{t("We create your Online Image")}</p>
+        </div>
+
+        <div className="footer-sitemap">
+                  <nav>
+                    <a href="/#services">{t("Services")}</a>
+                    <a href="/#work">{t("Work")}</a>
+                    <a href="/#about">{t("About")}</a>
+                    <a href="/#contact">{t("Contact")}</a>
+                    <a href="/privacy">{t("Privacy")}</a>
+                    <a href="/impressum">{t("Impressum")}</a>
+                  </nav>
+                </div>
+
+        <div className="legal"><span>© {year} ebogdan</span></div>
+      </footer>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
