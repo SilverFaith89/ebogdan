@@ -2,6 +2,10 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+## SEO service pages
+
+Service-page copy and metadata are maintained in `src/data/service-pages.json`. Run `npm run build:ssg` to create the production build, prerender the service pages, and generate `dist/sitemap.xml`. Deploy the generated `dist` directory so search engines receive each service page with its own content and metadata.
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
