@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:ssg": "npm run build && node scripts/generate-static.js",
+    "build:ssg": "npm run build && vite build --ssr src/entry-server.tsx --outDir dist-server && node scripts/generate-static.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },

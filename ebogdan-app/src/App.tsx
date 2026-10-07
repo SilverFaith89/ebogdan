@@ -1,21 +1,44 @@
 import { ArrowUpOutlined, CloseOutlined, InstagramOutlined, MailOutlined, MenuOutlined, PhoneOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import "./footer.css";
 import { translate } from "./i18n";
 import type { Language } from "./i18n";
 import { ImpressumPage } from "./pages/ImpressumPage";
 import { PrivacyPage } from "./pages/PrivacyPage";
+import servicePages from "./data/service-pages.json";
+import { ServicePage } from "./pages/ServicePage";
 
 const services = [
   ["01", "Web development", "High-performance websites and applications engineered around how your business really works.", "React · Architecture · Performance · SEO"],
   ["02", "Web design", "Elegant, conversion-focused digital experiences that make the right impression and feel effortless to use.", "UX/UI · Identity · Systems · Conversion"],
   ["03", "Photography", "A considered visual language for your people, products and the moments that make your brand credible.", "Business · Product · Portraits · Social"],
   ["04", "Social media", "Consistent, strategic content that builds visibility and gives your audience a reason to stay close.", "Strategy · Content · Direction · Publishing"],
-  ["05", "Workflow optimization", "A clear-eyed look at the friction in your business, with practical changes that return time and focus.", "Audit · Systems · Productivity · Clarity"],
-  ["06", "Automation & digitalization", "Connected tools and streamlined processes that let meaningful work take the foreground.", "Integration · Automation · Documentation · Scale"],
+  ["05", "Print design", "Thoughtful print materials that bring your brand into the real world, from first layout to print-ready files.", "Flyers · Business cards · Brochures · Print files"],
+  ["06", "Workflow optimization", "A clear-eyed look at the friction in your business, with practical changes that return time and focus.", "Audit · Systems · Productivity · Clarity"],
+  ["07", "Automation & digitalization", "Connected tools and streamlined processes that let meaningful work take the foreground.", "Integration · Automation · Documentation · Scale"],
 ];
+
+const servicePaths = Object.fromEntries(servicePages.map(({ homeService, slug }) => [homeService, `/${slug}`]));
+
+function RouteScrollManager() {
+  const { pathname, search, hash } = useLocation();
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      if (hash) {
+        document.getElementById(hash.slice(1))?.scrollIntoView();
+      } else {
+        window.scrollTo(0, 0);
+      }
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [hash, pathname, search]);
+
+  return null;
+}
 
 const projects = [
   { title: "Verdant / Studio", category: "Brand identity & digital design", image: "/assets/examples/5.jpg", className: "project-large", description: "A construction company brand and digital presence built around trust, craft and long-term quality." },
@@ -49,6 +72,10 @@ function SitePage() {
   }, []);
 
   useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
+  useEffect(() => {
     document.body.style.overflow = selectedImage ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -73,7 +100,12 @@ function SitePage() {
         <section className="hero"><div className="hero-copy reveal"><p className="eyebrow">{language === "de" ? `Webdesign und Entwicklung · ${year}` : language === "ro" ? `Design și dezvoltare website · ${year}` : `Website Design and Development · ${year}`}</p><p className="brand-tagline">{t("We create your Online Image")}</p><h1>{language === "de" ? <>Digitale Erlebnisse, die Unternehmen <em>voranbringen.</em></> : language === "ro" ? <>Experiențe digitale care duc afacerile <em>mai departe.</em></> : <>Digital experiences designed to <em>move</em> businesses forward.</>}</h1><p className="sub-label">{t("Kostenlose Beratung")}</p><p className="hero-intro">{t("We meet you personally and offer you a free consultation based on your own ideas and wishes.")}</p><div className="hero-actions"><a className="button button-light" href="mailto:ebogdan.online@gmail.com">{t("Start a conversation")} <ArrowUpOutlined /></a></div></div><div className="hero-art"><button type="button" className="hero-image image-button" aria-label="Open hero image" onClick={() => setSelectedImage("/assets/examples/4.jpg")} style={{ backgroundImage: "url('/assets/examples/4.jpg')" }} /></div></section>
         <section className="intro section" id="intro"><p className="eyebrow">{t("The studio")}</p><div className="intro-grid"><h2>{t("One partner.")}<br /><em>{t("Multiple disciplines.")}</em></h2><div><p className="lead">{t("You shouldn't have to coordinate five different people to make your digital presence feel like one coherent thing.")}</p><p>{t("ebogdan brings strategy, design, technology, content and optimization into one thoughtful service. The result is work that looks distinct, works hard and stays useful long after launch.")}</p></div></div><div className="discipline-line"><span>{t("Strategy")}</span><i>+</i><span>{t("Design")}</span><i>+</i><span>{t("Technology")}</span><i>+</i><span>{t("Content")}</span><i>+</i><span>{t("Optimization")}</span></div></section>
         <section className="team section" id="team"><div className="section-top"><p className="eyebrow">{t("The people / 01")}</p><h2>{t("A small team.")}<br /><em>{t("Serious about the details.")}</em></h2></div><div className="team-grid"><article className="member"><div className="member-image"><img src="/assets/Bogdan_Tudor_Cristian_min.jpg" width="900" height="1100" alt="Bogdan T. Cristian" onClick={() => setSelectedImage("/assets/Bogdan_Tudor_Cristian_min.jpg")} onError={(event) => { event.currentTarget.src = "/site-icon.svg"; }} /></div><div className="member-meta"><div><h3>Bogdan T. Cristian</h3><p>{t("Lead senior developer")}<br />{t("Owner")}</p></div><span>{t("Technology")}<br />{t("Direction")}</span></div></article>        <article className="member member-alexandra"><div className="member-image"><img src="/assets/Alexandra_Bogdan_min.png" width="900" height="1100" alt="Bogdan M. Alexandra" onClick={() => setSelectedImage("/assets/Alexandra_Bogdan_min.png")} onError={(event) => { event.currentTarget.src = "/site-icon.svg"; }} /></div><div className="member-meta"><div><h3>Bogdan M. Alexandra</h3><p>{t("Senior graphic designer")}</p></div><span>{t("Identity")}<br />{t("Visual direction")}</span></div></article></div></section>
-        <section className="services section" id="services"><div className="section-top"><p className="eyebrow">{t("Capabilities / 01")}</p><h2>{t("What we do")}</h2><p className="section-note">{t("A focused set of disciplines, connected by one clear point of view.")}</p></div><div className="service-list">{services.map(([number, title, description, tags]) => <article className="service-row" key={number}><span className="service-number">{number}</span><h3>{t(title)}</h3><p>{t(description)}</p><span className="service-tags">{t(tags)}</span><ArrowUpOutlined className="row-arrow" /></article>)}</div></section>
+        <section className="services section" id="services"><div className="section-top"><p className="eyebrow">{t("Capabilities / 01")}</p><h2>{t("What we do")}</h2><p className="section-note">{t("A focused set of disciplines, connected by one clear point of view.")}</p></div><div className="service-list">{services.map(([number, title, description, tags]) => {
+          const content = <><span className="service-number">{number}</span><h3>{t(title)}</h3><p>{t(description)}</p><span className="service-tags">{t(tags)}</span><ArrowUpOutlined className="row-arrow" /></>;
+          return servicePaths[title]
+            ? <Link className="service-row" key={number} to={servicePaths[title]}>{content}</Link>
+            : <article className="service-row" key={number}>{content}</article>;
+        })}</div></section>
         <section className="work section" id="work"><div className="section-top"><p className="eyebrow">{t("Selected work / 02")}</p><h2>{t("Quietly memorable.")}</h2></div><div className="project-grid">{projects.map((project) => <button type="button" className={`project ${project.className}`} key={project.title} onClick={() => setSelectedImage(project.image)}><div className="project-image" style={{ backgroundImage: `url(${project.image})` }} /><div className="project-meta"><div><h3>{t(project.title)}</h3><p>{t(project.description)}</p></div><span>{t(project.category)}</span></div></button>)}</div></section>
         <section className="principles section" id="about"><div className="section-top"><p className="eyebrow">{t("The difference / 03")}</p><h2>{t("Different disciplines.")}<br /><em>{t("One clear vision.")}</em></h2></div><div className="principle-list">{principles.map(([number, title, text]) => <article key={number}><span>{number}</span><div><h3>{t(title)}</h3><p>{t(text)}</p></div></article>)}</div></section>
         <section className="process section"><div className="section-top"><p className="eyebrow">{t("How it works / 04")}</p><h2>{t("From first thought")}<br /><em>{t("to finished work.")}</em></h2></div><div className="process-grid">{process.map(([number, title, text]) => <article key={number}><span>{number}</span><h3>{t(title)}</h3><p>{t(text)}</p></article>)}</div></section>
@@ -96,6 +128,7 @@ function SitePage() {
         <div className="footer-sitemap">
                   <nav>
                     <a href="/#services">{t("Services")}</a>
+                    {servicePages.map((service) => <Link key={service.slug} to={`/${service.slug}`}>{service.homeService === "Web design" ? "Webdesign" : service.homeService === "Social media" ? "Social Media" : service.homeService === "Photography" ? "Fotoshooting" : "Printdesign"}</Link>)}
                     <a href="/#work">{t("Work")}</a>
                     <a href="/#about">{t("About")}</a>
                     <a href="/#contact">{t("Contact")}</a>
@@ -132,11 +165,15 @@ function SitePage() {
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<SitePage />} />
-      <Route path="/privacy" element={<PrivacyPage />} />
-      <Route path="/impressum" element={<ImpressumPage />} />
-    </Routes>
+    <>
+      <RouteScrollManager />
+      <Routes>
+        <Route path="/" element={<SitePage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/impressum" element={<ImpressumPage />} />
+        {servicePages.map((service) => <Route key={service.slug} path={`/${service.slug}`} element={<ServicePage service={service} />} />)}
+      </Routes>
+    </>
   );
 }
 
